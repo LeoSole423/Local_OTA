@@ -1,0 +1,29 @@
+# Archivos y directorios generados por la compilación de ESP-IDF
+/build/
+/dist/
+
+# Archivo de configuración local. Es mejor versionar sdkconfig.defaults en su lugar.
+/sdkconfig
+/sdkconfig.old
+
+# Archivos de caché y de entorno de Python
+__pycache__/
+*.pyc
+/venv/
+/env/
+
+# Archivos del sistema operativo
+*.DS_Store
+Thumbs.db
+
+# Archivos de configuración de IDEs/editores
+.vscode/
+.idea/
+.cursor/
+*.swp
+*.swo
+
+# Archivos específicos de ESP-IDF y herramientas de desarrollo
+.clangd
+.devcontainer/
+sdkconfig.ci

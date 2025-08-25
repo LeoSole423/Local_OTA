@@ -1,0 +1,15 @@
+menu "Example Configuration"
+
+    config EXAMPLE_ESP_WIFI_SSID
+        string "WiFi SSID"
+        default "TU_SSID_WIFI"
+        help
+            The SSID (name) of the Wi-Fi network you want to connect to.
+
+    config EXAMPLE_ESP_WIFI_PASS
+        string "WiFi Password"
+        default "TU_PASSWORD_WIFI"
+        help
+            The password of the Wi-Fi network.
+
+endmenu
