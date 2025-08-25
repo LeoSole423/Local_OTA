@@ -11,6 +11,8 @@
 #include "lwip/sockets.h"
 #include "lwip/sys.h"
 #include <lwip/netdb.h>
+#include "mdns.h"
+#include "esp_mac.h"
 
 #include "wifi_logger.h"
 
@@ -91,6 +93,25 @@ static int wifi_log_vprintf(const char *format, va_list args) {
     int ret = vsnprintf(NULL, 0, format, args_copy);
     va_end(args_copy);
     return ret;
+}
+
+static void start_mdns_service(void)
+{
+    uint8_t mac[6];
+    esp_wifi_get_mac(WIFI_IF_STA, mac);
+
+    char hostname[32];
+    snprintf(hostname, sizeof(hostname), "esp32-ota-%02x%02x%02x", mac[3], mac[4], mac[5]);
+
+    ESP_ERROR_CHECK(mdns_init());
+    ESP_ERROR_CHECK(mdns_hostname_set(hostname));
+    ESP_ERROR_CHECK(mdns_instance_name_set("ESP32 OTA"));
+
+    mdns_txt_item_t serviceTxtData[] = {
+        {"board", "esp32"},
+    };
+    ESP_ERROR_CHECK(mdns_service_add(NULL, "_arduino", "_tcp", 3232, serviceTxtData, 1));
+    ESP_LOGI(TAG, "mDNS iniciado como host '%s', servicio _arduino._tcp en 3232", hostname);
 }
 
 
@@ -280,6 +301,9 @@ void wifi_logger_start(void)
 
     ESP_LOGI(TAG, "ESP_WIFI_MODE_STA");
     wifi_init_sta();
+
+    // Iniciar mDNS y anunciar servicio OTA estilo Arduino
+    start_mdns_service();
 
     xTaskCreate(tcp_server_task, "tcp_server", 4096, NULL, 5, NULL);
 }

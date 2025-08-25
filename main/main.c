@@ -2,12 +2,14 @@
 #include "freertos/task.h"
 #include "esp_log.h"
 #include "wifi_logger.h"
+#include "ota_server.h"
 
 static const char *TAG = "main_app";
 
 void app_main(void)
 {
     wifi_logger_start();
+    ota_server_start();
 
     int i = 0;
     while(1) {
