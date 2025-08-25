@@ -2,6 +2,9 @@
 /build/
 /dist/
 
+# Dependencias gestionadas por idf (no versionar)
+/managed_components/
+
 # Archivo de configuración local. Es mejor versionar sdkconfig.defaults en su lugar.
 /sdkconfig
 /sdkconfig.old

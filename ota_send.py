@@ -75,7 +75,7 @@ def discover_esp32(timeout_s: float = 3.0) -> Optional[Tuple[str, int]]:
 
     zeroconf = Zeroconf()
     listener = _Listener()
-    browser = ServiceBrowser(zeroconf, SERVICE_TYPE, handlers=[listener.add_service])
+    browser = ServiceBrowser(zeroconf, SERVICE_TYPE, listener=listener)
 
     # Esperar a que lleguen anuncios
     time.sleep(timeout_s)
